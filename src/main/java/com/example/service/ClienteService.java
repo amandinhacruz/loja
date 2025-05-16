@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 @RequiredArgsConstructor
 public class ClienteService {
@@ -30,6 +32,13 @@ public class ClienteService {
         Cliente save = clienteRepository.save(cliente);
 
         return ResponseEntity.ok(new ClienteDTO(save));
+    }
+
+    public ResponseEntity<ClienteDTO> atualizarCliente(@RequestBody ClienteDTO clienteDTO) {
+        Cliente cliente = ClienteDTO.toEntity(clienteDTO);
+        cliente = clienteRepository.save(cliente);
+        return  ResponseEntity.ok(new ClienteDTO(cliente));
+
     }
 
 

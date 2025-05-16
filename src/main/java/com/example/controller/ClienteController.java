@@ -30,5 +30,10 @@ public class ClienteController {
    public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO clienteDTO){
        return clienteService.adicionarCliente(clienteDTO);
    }
+
+   @PutMapping("/{id}")
+    public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable  Long id, @RequestBody ClienteDTO clienteDTO) {
+       return clienteService.atualizarCliente(clienteDTO);
+   }
    
 }

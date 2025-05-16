@@ -2,11 +2,13 @@ package com.example.dto;
 
 import com.example.model.Cliente;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class ClienteDTO {
     private Long id;
     private String nome;
@@ -18,6 +20,8 @@ public class ClienteDTO {
         cliente.setEmail(clienteDTO.getEmail());
         return cliente;
     }
+
+
 
    public ClienteDTO(Cliente cliente){
         this.id = cliente.getId();
