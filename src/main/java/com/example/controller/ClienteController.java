@@ -26,6 +26,11 @@ public class ClienteController {
        return clienteService.listarTodos();
    }
 
+   @GetMapping("/{id}")
+   public ResponseEntity<ClienteDTO> buscarClientePorId(@PathVariable Long id){
+       return clienteService.verificarCliente(id);
+   }
+
    @PostMapping
    public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO clienteDTO){
        return clienteService.adicionarCliente(clienteDTO);
@@ -35,5 +40,9 @@ public class ClienteController {
     public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable  Long id, @RequestBody ClienteDTO clienteDTO) {
        return clienteService.atualizarCliente(clienteDTO);
    }
-   
+
+   @DeleteMapping("/{id}")
+    public ResponseEntity<ClienteDTO> deletarCliente(@PathVariable Long id) {
+       return  clienteService.deletarCliente(id) ;
+   }
 }
