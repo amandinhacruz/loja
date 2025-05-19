@@ -19,6 +19,14 @@ public class CategoriaDTO {
             this.descricao = categoria.getDescricao();
         }
 
+        public static Categoria toEntity(CategoriaDTO categoriaDTO) {
+            Categoria categoria = new Categoria();
+            categoria.setNomeCategoria(categoria.getNomeCategoria());
+            categoria.setDescricao(categoriaDTO.getDescricao());
+            return categoria;
+        }
+
+
 
 
 

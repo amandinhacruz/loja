@@ -1,8 +1,11 @@
 package com.example.controller;
 
+import com.example.dto.CategoriaDTO;
 import com.example.model.Categoria;
 import com.example.repository.CategoriaRepository;
+import com.example.service.CategoriaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,30 +15,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoriaController {
 
-    private final CategoriaRepository categoriaRepository;
+    private final CategoriaService categoriaService;
 
     @GetMapping
-    public List<Categoria> listarCategoria() {
-        return categoriaRepository.findAll();
+    public ResponseEntity<List<CategoriaDTO>> listarCategoria() {
+        return categoriaService.listarCategoria();
     }
 
     @PostMapping
-    public Categoria criarCategoria(@RequestBody Categoria categoria){
-        return categoriaRepository.save(categoria);
+    public ResponseEntity<CategoriaDTO> criarCategoria(@RequestBody CategoriaDTO categoriaDTO){
+        return categoriaService.criarCategoria(categoriaDTO);
     }
 
     @PutMapping("/{id}")
-    public Categoria atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
-        Categoria categoriaAtualizada = categoriaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
-        categoriaAtualizada.setNomeCategoria(categoria.getNomeCategoria());
-        categoriaAtualizada.setDescricao(categoria.getDescricao());
-
-        return categoriaRepository.save(categoriaAtualizada);
+    public ResponseEntity<CategoriaDTO> atualizarCategoria(@PathVariable Long id, @RequestBody CategoriaDTO categoriaDTO) {
+        return categoriaService.atualizarCategoria(id, categoriaDTO);
     }
 
     @DeleteMapping("/{id}")
-    public void deletarCategoria(@PathVariable Long id) {
-        categoriaRepository.deleteById(id);
+    public ResponseEntity<Void> deletarCategoria (@PathVariable Long id) {
+       return categoriaService.deletarCategoria(id);
     }
 }

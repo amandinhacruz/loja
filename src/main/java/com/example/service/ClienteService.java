@@ -39,23 +39,22 @@ public class ClienteService {
         return ResponseEntity.ok(new ClienteDTO(cliente));
     }
 
-    public ResponseEntity<ClienteDTO> adicionarCliente(@RequestBody ClienteDTO clienteDTO){
+    public ResponseEntity<ClienteDTO> adicionarCliente( @RequestBody ClienteDTO clienteDTO){
         Cliente cliente = ClienteDTO.toEntity(clienteDTO);
         Cliente save = clienteRepository.save(cliente);
 
         return ResponseEntity.ok(new ClienteDTO(save));
     }
 
-    public ResponseEntity<ClienteDTO> atualizarCliente(@RequestBody ClienteDTO clienteDTO) {
-        Cliente cliente = clienteRepository.getReferenceById(clienteDTO.getId());
-        if(clienteDTO.getNome() != null) {
-            cliente.setNome(clienteDTO.getNome());
+    public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+        Optional<Cliente> clienteExistente = clienteRepository.findById(id);
+        if (clienteExistente.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        if(clienteDTO.getEmail() != null) {
-            cliente.setEmail(clienteDTO.getEmail());
-        }
-        cliente = clienteRepository.save(cliente);
-        return  ResponseEntity.ok(new ClienteDTO(cliente));
+        Cliente clienteAtualizado = ClienteDTO.toEntity(clienteDTO);
+        clienteAtualizado.setId(id);
+        Cliente clienteAtualizadoSalvo = clienteRepository.save(clienteAtualizado);
+        return  ResponseEntity.ok(new ClienteDTO(clienteAtualizadoSalvo));
     }
 
     public ResponseEntity<ClienteDTO> deletarCliente(@PathVariable Long id) {
