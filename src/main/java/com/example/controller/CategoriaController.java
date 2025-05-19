@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/categorias")
 @RequiredArgsConstructor
 public class CategoriaController {
 
@@ -24,7 +24,7 @@ public class CategoriaController {
         return categoriaRepository.save(categoria);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public Categoria atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
         Categoria categoriaAtualizada = categoriaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
@@ -34,6 +34,7 @@ public class CategoriaController {
         return categoriaRepository.save(categoriaAtualizada);
     }
 
+    @DeleteMapping("/{id}")
     public void deletarCategoria(@PathVariable Long id) {
         categoriaRepository.deleteById(id);
     }

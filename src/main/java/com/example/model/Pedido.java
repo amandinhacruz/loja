@@ -18,8 +18,10 @@ public class Pedido {
     private Long id;
     private LocalDate dataDoPedido;
 
-    @ManyToMany
-    private List<Produto> produto;
+    @ManyToOne
+    private Produto produto;
+    @ManyToOne
+    private Cliente cliente;
 
     private float quantidade;
     private float valorTotal;
